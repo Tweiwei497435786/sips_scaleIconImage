@@ -1,0 +1,25 @@
+#!/bin/sh
+
+#设计提供1024的图片，自动剪裁为icon对应的各格式
+curDir=`pwd`
+iconDir="$curDir/scaleDir"
+distDir="/Users/tianww/Documents/BeiBei_Project/beibei/beibei/Images.xcassets/AppIcon.appiconset" #需要替换的目标目录
+
+if [ -d $iconDir ]
+then
+rm -rf $iconDir
+mkdir $iconDir
+else
+mkdir $iconDir
+fi
+
+IconWithSize() {
+sips -Z $1 1024.png --out $iconDir/$1.png
+}
+
+iconSize="29 40 50 57 58 72 76 80 87 100 114 120 144 152 180"
+for size in $iconSize
+do
+IconWithSize $size
+done
+cp  -rp $iconDir/* $distDir
